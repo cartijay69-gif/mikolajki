@@ -13,36 +13,17 @@ const SnowAnimation = () => {
   const snowflakes = Array.from({ length: 60 }).map((_, i) => ({
     id: i,
     left: Math.random() * 100,
-    delay: Math.random() * 0.3,
-    duration: 4 + Math.random() * 2,
+    delay: Math.random() * 0.5,
+    duration: 3 + Math.random() * 1.5,
     size: 8 + Math.random() * 16,
-    drift: 30 + Math.random() * 40, // Random horizontal drift
-    animationName: `snow-drift-${i % 3}`, // Different drift patterns
   }));
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-40">
       <style>{`
-        @keyframes snow-drift-0 {
-          0% { transform: translateY(-10px) translateX(0) rotate(0deg); opacity: 1; }
-          25% { transform: translateY(25vh) translateX(-30px) rotate(90deg); opacity: 1; }
-          50% { transform: translateY(50vh) translateX(15px) rotate(180deg); opacity: 1; }
-          75% { transform: translateY(75vh) translateX(-20px) rotate(270deg); opacity: 0.9; }
-          100% { transform: translateY(100vh) translateX(10px) rotate(360deg); opacity: 0; }
-        }
-        @keyframes snow-drift-1 {
-          0% { transform: translateY(-10px) translateX(0) rotate(0deg); opacity: 1; }
-          25% { transform: translateY(25vh) translateX(40px) rotate(90deg); opacity: 1; }
-          50% { transform: translateY(50vh) translateX(-25px) rotate(180deg); opacity: 1; }
-          75% { transform: translateY(75vh) translateX(35px) rotate(270deg); opacity: 0.9; }
-          100% { transform: translateY(100vh) translateX(-15px) rotate(360deg); opacity: 0; }
-        }
-        @keyframes snow-drift-2 {
-          0% { transform: translateY(-10px) translateX(0) rotate(0deg); opacity: 1; }
-          25% { transform: translateY(25vh) translateX(20px) rotate(90deg); opacity: 1; }
-          50% { transform: translateY(50vh) translateX(-40px) rotate(180deg); opacity: 1; }
-          75% { transform: translateY(75vh) translateX(25px) rotate(270deg); opacity: 0.9; }
-          100% { transform: translateY(100vh) translateX(-30px) rotate(360deg); opacity: 0; }
+        @keyframes snow-fall-straight {
+          0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
       `}</style>
       {snowflakes.map((item) => (
@@ -51,8 +32,8 @@ const SnowAnimation = () => {
           style={{
             position: "absolute",
             left: `${item.left}%`,
-            top: "-10px",
-            animation: `${item.animationName} ${item.duration}s ease-in ${item.delay}s forwards`,
+            top: "-20px",
+            animation: `snow-fall-straight ${item.duration}s linear ${item.delay}s forwards`,
           }}
         >
           <Snowflake
