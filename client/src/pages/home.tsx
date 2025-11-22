@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import type { CheckResultResponse } from "@shared/schema";
-import { Gift, Sparkles, TreePine, AlertCircle, Snowflake, Share2, Users, Copy, Check } from "lucide-react";
+import { Gift, Sparkles, TreePine, AlertCircle, Snowflake, Users } from "lucide-react";
 
 // Confetti particle component
 const Confetti = () => {
@@ -43,7 +43,6 @@ export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showParticipants, setShowParticipants] = useState(false);
-  const [copiedResult, setCopiedResult] = useState(false);
 
   // Fetch participants list
   const { data: participants } = useQuery({
@@ -72,8 +71,6 @@ export default function Home() {
       setError(null);
       setShowResult(true);
       setShowConfetti(true);
-      // Play celebration sound effect
-      playSound();
       setTimeout(() => setShowConfetti(false), 3000);
     },
     onError: (err: any) => {
@@ -92,38 +89,6 @@ export default function Home() {
     }
     setShowResult(false);
     checkResultMutation.mutate(name.trim());
-  };
-
-  const handleShareResult = () => {
-    if (result) {
-      const text = `🎄 Mikołajkowy Losowator: Będę kupować prezent dla ${result}! 🎁`;
-      navigator.clipboard.writeText(text);
-      setCopiedResult(true);
-      setTimeout(() => setCopiedResult(false), 2000);
-    }
-  };
-
-  const playSound = () => {
-    // Create a simple beep sound using Web Audio API
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-      
-      oscillator.frequency.value = 800;
-      oscillator.type = "sine";
-      
-      gain.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-      
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.3);
-    } catch {
-      // Audio not supported, silently fail
-    }
   };
 
   return (
@@ -237,25 +202,6 @@ export default function Home() {
                     {result}
                   </p>
                 </div>
-
-                {/* Share Button */}
-                <Button
-                  onClick={handleShareResult}
-                  variant="outline"
-                  className="w-full mt-4 gap-2 sm:gap-3"
-                >
-                  {copiedResult ? (
-                    <>
-                      <Check className="w-4 h-4" />
-                      Skopiowano!
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4" />
-                      Kopiuj wynik
-                    </>
-                  )}
-                </Button>
               </div>
             </div>
           )}
