@@ -47,8 +47,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5 pointer-events-none text-primary">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5 pointer-events-none text-primary hidden sm:block">
         <Snowflake className="absolute top-20 left-20 w-16 h-16" />
         <Snowflake className="absolute top-40 right-32 w-14 h-14" />
         <Snowflake className="absolute bottom-32 left-40 w-20 h-20" />
@@ -58,23 +58,23 @@ export default function Home() {
       </div>
 
       <div className="w-full max-w-md relative z-10">
-        <div className="text-center space-y-6 mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Gift className="w-14 h-14 text-primary" />
-            <TreePine className="w-16 h-16 text-accent-foreground" />
-            <Gift className="w-14 h-14 text-primary" />
+        <div className="text-center space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <Gift className="w-10 h-10 sm:w-14 sm:h-14 text-primary" />
+            <TreePine className="w-12 h-12 sm:w-16 sm:h-16 text-accent-foreground" />
+            <Gift className="w-10 h-10 sm:w-14 sm:h-14 text-primary" />
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-fredoka font-bold text-foreground leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-fredoka font-bold text-foreground leading-tight">
             Mikołajkowy Losowator
           </h1>
           
-          <p className="text-lg text-muted-foreground font-medium">
+          <p className="text-base sm:text-lg text-muted-foreground font-medium">
             Sprawdź, kogo wylosowałeś w tym roku!
           </p>
         </div>
 
-        <Card className="p-8 space-y-6 shadow-xl border-card-border">
+        <Card className="p-6 sm:p-8 space-y-6 shadow-xl border-card-border">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-3">
               <Label htmlFor="name-input" className="text-sm font-medium text-foreground">
@@ -84,10 +84,10 @@ export default function Home() {
                 id="name-input"
                 data-testid="input-name"
                 type="text"
-                placeholder="np. Anna, Marek..."
+                placeholder="np. Janek, Kasia..."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="h-14 px-4 text-base rounded-xl border-input focus-visible:ring-2 focus-visible:ring-ring transition-all shadow-sm focus:shadow-md"
+                className="h-12 sm:h-14 px-4 text-sm sm:text-base rounded-xl border-input focus-visible:ring-2 focus-visible:ring-ring transition-all shadow-sm focus:shadow-md"
                 disabled={checkResultMutation.isPending}
               />
             </div>
@@ -95,17 +95,17 @@ export default function Home() {
             <Button
               type="submit"
               data-testid="button-check-result"
-              className="w-full h-14 text-lg font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+              className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
               disabled={checkResultMutation.isPending}
             >
               {checkResultMutation.isPending ? (
                 <span className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 animate-spin" />
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                   Losowanie...
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
-                  <Gift className="w-5 h-5" />
+                  <Gift className="w-4 h-4 sm:w-5 sm:h-5" />
                   Sprawdź, kogo wylosowałeś!
                 </span>
               )}
@@ -115,18 +115,19 @@ export default function Home() {
           {showResult && result && (
             <div
               data-testid="result-success"
-              className="animate-fade-in rounded-2xl p-8 bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20"
+              className="animate-bounce-in rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 relative overflow-hidden"
             >
-              <div className="text-center space-y-4">
-                <Gift className="w-16 h-16 mx-auto text-primary animate-pulse-subtle" />
-                <div className="space-y-2">
-                  <p className="text-lg text-muted-foreground">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 animate-shimmer pointer-events-none" style={{backgroundSize: '200% 100%'}} />
+              <div className="relative text-center space-y-4">
+                <Gift className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-primary animate-float" />
+                <div className="space-y-2 sm:space-y-3">
+                  <p className="text-base sm:text-lg text-muted-foreground">
                     Cześć <span className="font-semibold text-foreground">{name}</span>!
                   </p>
-                  <p className="text-xl font-semibold text-foreground">
+                  <p className="text-lg sm:text-xl font-semibold text-foreground">
                     W tym roku kupujesz prezent dla:
                   </p>
-                  <p className="text-3xl font-fredoka font-bold text-primary mt-2">
+                  <p className="text-2xl sm:text-3xl font-fredoka font-bold text-primary mt-3 sm:mt-4 animate-spin-in">
                     {result}
                   </p>
                 </div>
@@ -137,11 +138,11 @@ export default function Home() {
           {showResult && error && (
             <div
               data-testid="result-error"
-              className="animate-fade-in animate-shake rounded-2xl p-8 bg-gradient-to-br from-destructive/10 to-destructive/5 border border-destructive/20"
+              className="animate-fade-in animate-shake rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-destructive/10 to-destructive/5 border border-destructive/20"
             >
               <div className="text-center space-y-3">
-                <AlertCircle className="w-12 h-12 mx-auto text-destructive" />
-                <p className="text-lg font-semibold text-foreground">
+                <AlertCircle className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-destructive" />
+                <p className="text-base sm:text-lg font-semibold text-foreground">
                   {error}
                 </p>
               </div>
@@ -149,10 +150,10 @@ export default function Home() {
           )}
         </Card>
 
-        <div className="text-center mt-8 text-sm text-muted-foreground flex items-center justify-center gap-2">
-          <TreePine className="w-4 h-4" />
+        <div className="text-center mt-6 sm:mt-8 text-xs sm:text-sm text-muted-foreground flex items-center justify-center gap-2">
+          <TreePine className="w-3 h-3 sm:w-4 sm:h-4" />
           <p>Wesołych Świąt!</p>
-          <Sparkles className="w-4 h-4" />
+          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
       </div>
     </div>
